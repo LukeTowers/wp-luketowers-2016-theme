@@ -16,6 +16,9 @@ add_action('wp', 'conditionally_load_resources');
 
 // Enqueues the template's public styles as set in 'template_admin_styles' filter
 function initialize_template_public_styles() {
+	// Enqueue Lato Font from Google Fonts
+	wp_enqueue_style('font-lato', 'https://fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic');
+	
 	$stylesheets = apply_filters('template_public_styles', array());
 	if (!empty($stylesheets)) {
 		foreach ($stylesheets as $stylesheet) {

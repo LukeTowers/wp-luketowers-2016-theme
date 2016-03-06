@@ -65,22 +65,25 @@
 				});
 				</script>
 				<div class="scroll-to-top"><a href="#" style="display: block;"></a></div>
-				<div class="navigation_container">
-					<?php						
-						$main_menu_args = array(
-							'theme_location'  => 'main-menu',
-							'container'       => 'div',
-							'container_class' => 'main-navigation',
-							'menu_class'      => 'main-menu',
-							'echo'            => true,
-							'fallback_cb'     => 'wp_page_menu',
-							'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
-							'after'			  => '<div class="clearfix"></div>',
-							'depth'           => 0,
-						);
-						
-						wp_nav_menu($main_menu_args);	
-					?>
+				<div class="navigation_position_wrapper">
+					<div class="navigation_container">
+						<?php						
+							$main_menu_args = array(
+								'theme_location'  => 'main-menu',
+								'container'       => 'div',
+								'container_class' => 'main-navigation',
+								'menu_class'      => 'main-menu',
+								'echo'            => true,
+								'fallback_cb'     => 'wp_page_menu',
+								'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+								'after'			  => '<div class="clearfix"></div>',
+								'depth'           => 0,
+							);
+							
+							wp_nav_menu($main_menu_args);	
+						?>
+					</div>
+					<div class="clearfix"></div>
 				</div>
 				<div class="clearfix"></div>
 			</div>
