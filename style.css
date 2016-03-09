@@ -159,7 +159,10 @@ blockquote:before {
 
 
 
-.header_container {
+.header_container,
+.header_container a,
+.site-logo, 
+.site-logo * {
 	-webkit-transition: all .1s ease-in-out;
 	-moz-transition: all .1s ease-in-out;
 	-o-transition: all .1s ease-in-out;
@@ -167,21 +170,21 @@ blockquote:before {
 	transition: all .1s ease-in-out;
 }
 
-
-
-.site-logo a {
-    display: block;
-}
-
 .site-logo {
     float: left;
     margin-left: 5%;
     padding-top: 10px;
     padding-bottom: 10px;
+    height: 75px;
+}
+
+.site-logo a {
+    display: block;
+    height: 100%;
 }
 
 .site-logo img {
-    height: 75px;
+    height: 100%;
 }
 
 
@@ -199,7 +202,7 @@ blockquote:before {
 .mobile-menu-button {
 	display: block;
 	float: right;
-	padding: 40px 5% 37px 0px;
+	padding: 40px 5% 34px 0px;
 	text-align: center;
 }
 
@@ -229,16 +232,18 @@ blockquote:before {
 	background-color: #09495A;
 }
 
-.main-menu li {
-	list-style-type: none;
-}
-
 .main-menu {
 	margin: 0px;
 	padding: 0px;
 	text-align: center;
-	font-family: 'proxima-nova', sans-serif;
+	text-transform: Uppercase;
+	font-family: 'Lato', sans-serif;
+	letter-spacing: 2px;
 	font-size: 1.5em;
+}
+
+.main-menu li {
+	list-style-type: none;
 }
 
 .main-menu a {
@@ -247,8 +252,42 @@ blockquote:before {
 	color: #FFF;
 }
 
-.main-menu a:hover {
-	background-color: #055166;
+.main-menu a:hover,
+.main-menu .current-menu-item a {
+	background-color: #1395BA;
+	color: #FFFFFF;
+}
+
+
+
+
+
+
+
+
+
+
+.social_links_container {
+    position: absolute;
+    top: 50%;
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+    right: 5%;
+}
+
+.social-links {
+    font-size: 1.6em;
+}
+
+.social-links a {
+    display: inline-block;
+    margin: 0 3px;
+    color: #1395BA;
+}
+
+.social-links a:hover {
+    color: #0C647D;
 }
 
 
@@ -301,9 +340,13 @@ blockquote:before {
 // Section: 		Media Queries
 ******************************************************************************************************/
 
-@media only screen and (min-width: 720px) {
+@media only screen and (min-width: 820px) {
 	body {
-		padding-top: 98px;
+		padding-top: 95px;
+	}
+	
+	.site-logo {
+		margin-left: 3%;
 	}
 	
 	.header_container {
@@ -328,13 +371,26 @@ blockquote:before {
 	}
 	
 	.main-menu a {
+		border-top-right-radius: 5px;
+		border-top-left-radius: 5px;
+		border: 1px solid transparent;
+		padding: 10px 15px;
 		color: #000;
-		padding: 15px 15px 8px 15px;
 	}
 	
-	ul.main-menu {
+	.main-menu .menu-item:first-child a {
+		border-top-left-radius: 30px;
+		border-top-right-radius: 5px;
+	}
+		
+	.main-menu .menu-item:last-child a {
+		border-top-right-radius: 30px;
+		border-top-left-radius: 5px;
+	}
+	
+	.main-menu {
 		padding: 0px 10px 0px 0px;
-		font-size: 0.9em;
+		font-size: 1em;
 	}
 	
 	.navigation_position_wrapper {
@@ -359,7 +415,12 @@ blockquote:before {
 		display: inline-block;
 	}
 	
-	.pin-nav-to-top .header_container {
+	.social_links_container {
+		right: 3%
+	}
+	
+	.pin-nav-to-top .header_container,
+	.pin-nav-to-top .header_container * {
 		-webkit-transition: all .1s ease-in-out;
 		-moz-transition: all .1s ease-in-out;
 		-o-transition: all .1s ease-in-out;
@@ -373,9 +434,19 @@ blockquote:before {
 		margin-bottom: 20px;
 	}
 	
+	.pin-nav-to-top .site-logo {
+		height: 50px;
+	}
+	
 	.pin-nav-to-top .main-menu a {
 		color: #FFF;
 	}
+	
+	.pin-nav-to-top .menu-item a:hover,
+	.pin-nav-to-top .current-menu-item a, {
+	    color: #000;
+	}
+
 	
 	.page-header .header_featured_container {
 		height: 500px;

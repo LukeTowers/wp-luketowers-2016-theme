@@ -19,7 +19,9 @@ function initialize_template_public_styles() {
 	// Enqueue Lato Font from Google Fonts
 	wp_enqueue_style('font-lato', 'https://fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic');
 	
-	$stylesheets = apply_filters('template_public_styles', array());
+	$stylesheets = apply_filters('template_public_styles', array(
+		'font-awesome.min',
+	));
 	if (!empty($stylesheets)) {
 		foreach ($stylesheets as $stylesheet) {
 			wp_enqueue_style($stylesheet, LUKE_2016_TEMPLATE_URL . "/includes/css/{$stylesheet}.css");
