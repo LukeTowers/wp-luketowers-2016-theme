@@ -46,12 +46,14 @@ function update_theme_metaboxes($post_id) {
 	$header_options = array();
 	
 	// Process the header options
-	$header_options['header_text'] = (!empty($_POST['header_text'])) ? $_POST['header_text'] : '';
-	$header_options['background_colour'] = (!empty($_POST['background_colour'])) ? $_POST['background_colour'] : '';
-	$header_options['no_image'] = !empty($_POST['no_image']);
-	$header_options['y_correction'] = @$_POST['y_correction'];
-	$header_options['transparent_overlay'] = !empty($_POST['transparent_overlay']);
-	$header_options['overlay_opacity'] = @$_POST['overlay_opacity'] ?: '';
+	$header_options['header_text']           = (!empty($_POST['header_text'])) ? $_POST['header_text'] : '';
+	$header_options['background_attachment'] = (!empty($_POST['background_attachment'])) ? $_POST['background_attachment'] : '';
+	$header_options['background_colour']     = (!empty($_POST['background_colour'])) ? $_POST['background_colour'] : '';
+	$header_options['background_size']       = (!empty($_POST['background_size'])) ? $_POST['background_size'] : '';
+	$header_options['y_correction']          = @$_POST['y_correction'];
+	$header_options['transparent_overlay']   = !empty($_POST['transparent_overlay']);
+	$header_options['overlay_opacity']       = @$_POST['overlay_opacity'] ?: '';
+	$header_options['no_image']              = !empty($_POST['no_image']);
 	
 	// Update the header options
 	update_post_meta($post_id, 'header_options', $header_options);

@@ -18,13 +18,15 @@ add_action('wp', 'conditionally_load_resources');
 function initialize_template_public_styles() {
 	// Enqueue Lato Font from Google Fonts
 	wp_enqueue_style('font-lato', 'https://fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic');
+// 	wp_enqueue_style('font-merriweather', 'https://fonts.googleapis.com/css?family=Merriweather:400,700');
+// 	wp_enqueue_style('font-raleway', 'https://fonts.googleapis.com/css?family=Raleway:400,700');
 	
 	$stylesheets = apply_filters('template_public_styles', array(
 		'font-awesome.min',
 	));
 	if (!empty($stylesheets)) {
 		foreach ($stylesheets as $stylesheet) {
-			wp_enqueue_style($stylesheet, LUKE_2016_TEMPLATE_URL . "/includes/css/{$stylesheet}.css");
+			wp_enqueue_style($stylesheet, LUKE_2016_TEMPLATE_URL . "includes/css/{$stylesheet}.css");
 		}
 	}
 	wp_enqueue_style('style', LUKE_2016_TEMPLATE_URL . 'style.css');
@@ -37,7 +39,7 @@ function initialize_template_admin_styles() {
 	$stylesheets = apply_filters('template_admin_styles', array('editor'));
 	if (!empty($stylesheets)) {
 		foreach ($stylesheets as $stylesheet) {
-			wp_enqueue_style($stylesheet, LUKE_2016_TEMPLATE_URL . "/includes/css/{$stylesheet}.css");
+			wp_enqueue_style($stylesheet, LUKE_2016_TEMPLATE_URL . "includes/css/{$stylesheet}.css");
 		}
 	}
 }
@@ -51,6 +53,7 @@ function template_favicon() {
 }
 add_action('wp_head', 'template_favicon');
 add_action('admin_head', 'template_favicon');
+add_action('login_enqueue_scripts', 'template_favicon');
 
 
 

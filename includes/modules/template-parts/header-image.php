@@ -8,70 +8,117 @@
 global $template_component_args;
 /*
 	Options are:
-		- 'header-image-post' (Integer): set the post id to be used by this component
-		- 'class' (String): set the CSS class to be attached to the image
-		- 'image_only' (Boolean): specify if only the image is to be returned
-		- 'default' (String): URL to an image to be used as a default if one for the current post isn't found
-		- 'size' (String|Array(width,height)): size of the image to be used
-		- 'content-override' (String): HTML content to insert instead of content 
-		- 'no_image' (Boolean): No image is required to display section
-		- 'background_colour' (String): Background colour for the section
+		- 'header-image-post' (Integer):  set the post id to be used by this component (defaults to get_the_ID() results)
+		- 'class'             (String):   set the CSS class to be attached to the image
+		- 'container_class'   (String):   set the CSS class to be attached to the container
+		- 'overlay_class'     (String):   set the CSS class to be attached to the transparent overlay
+		- 'image_only'        (Boolean):  specify if only the featured display element is to be returned instead of it and it's container
+		- 'size'              (String|Array(width,height)): size of the image to be used
+		- 'include_meta'      (Boolean):  include the <meta itemprop="image" content="image_url"> markup in the results
+		- 'defaults' (Array):
+			- 'header_text'           (String):   Default HTML content to use if none is found attached to the post
+			- 'background_attachment' (String):   Default CSS background attachment to be used if none is found attached to the post
+			- 'background_colour'     (String):   Default CSS background colour to be used if none is found attached to the post
+			- 'background_size'       (String):   Set the CSS background size for the image if none is found attached to the post
+			- 'y_correction'          (String):   Set the CSS background-position-y for the background if none is found attached to the post
+			- 'transparent_overlay    (Boolean):  Whether to display a transparent overlay or not
+			- 'overlay_opacity'       (String):   Alpha value for RGBA(0,0,0,x) opacity layer
+			- 'no_image'              (Boolean):  Specify if the featured display element is returned without image data (saves a db call if only background colour is desired)
+			- 'image_url'             (String):   URL to default image to be used if none are found attached to the post
+		- 'overrides' (Array):
+			- 'header_text'           (String):   HTML content to be used regardless of anything else
+			- 'background_attachment' (String):  CSS background attachment to be used regardless of anything else
+			- 'background_colour'     (String):   CSS background colour to be used regardless of anything else
+			- 'background_size'       (String):   Set the CSS background size for the image regardless of anything else
+			- 'y_correction'          (String):   Set the CSS background-position-y for the background regardless of anything else
+			- 'transparent_overlay    (Boolean):  Whether to display a transparent overlay or not
+			- 'overlay_opacity'       (String):   Alpha value for RGBA(0,0,0,x) opacity layer
+			- 'no_image'              (Boolean):  specify if the featured display element is returned without image data (saves a db call if only background colour is desired)
+			- 'image_url'             (String):   URL to image to be used regardless of anything else
 */
 
 
 // Get the ID of the post to use - override by setting the header-image-post argument
 $current_post = @$template_component_args['header-image-post'] ?: get_the_ID();
 
-// Get the class to use with the image - override by setting the class argument
+// Get the classes to use
 $class = @$template_component_args['class'] ?: 'featured-background';
+$container_class = @$template_component_args['container_class'] ?: 'header_featured_container';
+$overlay_class = @$template_component_args['overlay_class'] ?: 'header-overlay';
 
 // Detect if a container is not required
-if (@$template_component_args['image_only'] === true) {
-	$image_only = true;
-} else {
-	$image_only = false;
-}
+$no_container = !(empty($template_component_args['image_only']));
 
 
+
+// Setup the default header options
+$default_header_options = array_merge(array(
+	'header_text'            => '',
+	'background_attachement' => '',
+	'background_colour'      => '',
+	'background_size'        => '',
+	'y_correction'           => '',
+	'transparent_overlay'    => false,
+	'overlay_opacity'        => '',
+	'no_image'               => false,
+	'image_url'              => '',
+), (array) @$template_component_args['defaults']);
+
+// Setup the overriding header options
+$overriding_header_options = @$template_component_args['overrides'] ?: array();
+
+// Setup the post header options
 if (!empty($current_post)) {
-	// Load the selected post's header options
-	$header_options = get_post_meta($current_post, 'header_options', true);
+	$post_header_options = get_post_meta($current_post, 'header_options', true);
 	
-	// Get the no_image option
-	$no_image = !(empty($template_component_args['no_image'])) || !(empty($header_options['no_image']));
+	// Get the post's header image as long as there is reason to
+	if (empty($post_header_options['no_image']) && empty($overriding_header_options['no_image']) && empty(@$overriding_header_options['image_url'] && has_post_thumbnail($current_post))) {
+		// If mobile, default to large instead of original size
+		if (lai_mobile_visitor() || lai_tablet_visitor()) {
+			$default_size = 'large';
+		} else {
+			$default_size = 'full';
+		}
+		
+		$size = @$template_component_args['size'] ?: $default_size;
+		
+		// Get the url of the featured image for this post
+		$url_array = wp_get_attachment_image_src(get_post_thumbnail_id($current_post), $size);
+		$url = @$url_array[0];
+		
+		if (!empty($url)) {
+			$post_header_options['image_url'] = $url;
+		}
+	}
+} else { $post_header_options = array(); }
+
+
+
+// Merge the default, post, and overriding header options to get the final version of the options for content generation
+$header_options = array_merge($default_header_options, $post_header_options, $overriding_header_options);
+
+// Determine whether to continue with generating anything
+if ($header_options['no_image'] || !empty($header_options['image_url'])) {
 	
-	// Get the background_colour option
-	$background_colour = @$header_options['background_colour'] ?: @$template_component_args['background_colour'];
-	$background_colour_css = !empty($background_colour) ? " background-color: {$background_colour};" : '';
+	// Generate the inline background colour CSS to use
+	$background_colour_css = !empty($header_options['background_colour']) ? " background-color: {$header_options['background_colour']};": '';
 	
-	// Generate only the color span if that is all that is requested.
-	if ($no_image) {
+	// Just generate the span with the background colour if that is all that's needed
+	if ($header_options['no_image'] || empty($header_options['image_url'])) {
 		$header_html = '<span class="' . $class . '" style="' . $background_colour_css . '"></span>';
 	} else {
-		if (has_post_thumbnail($current_post) || !empty($template_component_args['default'])) {
-			// If mobile, default to large instead of original size
-			if (lai_mobile_visitor() || lai_tablet_visitor()) {
-				$default_size = 'large';
-			} else {
-				$default_size = 'full';
-			}
-			
-			$size = @$template_component_args['size'] ?: $default_size;
-			
-			// Get the url of the featured image for this post
-			$url_array = wp_get_attachment_image_src(get_post_thumbnail_id($current_post), $size);
-			$url = @$url_array[0];
-			$url = $url ?: @$template_component_args['default']; // Attempt to assign the default image to the url if no others found
-			
-			if (!empty($url)) {
-				// Generate the y correction if necessary
-				if (!empty($header_options['y_correction'])) {
-					$y_correction = 'background-position: center ' . $header_options['y_correction'] . ';';
-				} else { $y_correction = ''; }
-							
-				// Generate the image html
-				$header_html = '<span class="' . $class . '" style="background-image: url(\'' . $url . '\');' . $y_correction . '"></span>';
-			}
+		// Generate the inline background position, attachment, and size css
+		$background_position_css   = !empty($header_options['y_correction'])    ? " background-position: center {$header_options['y_correction']};" : '';
+		$background_attachment_css = !empty($header_options['background_attachment']) ? " background-attachment: {$header_options['background_attachment']};" : '';
+		$background_size_css       = !empty($header_options['background_size']) ? " background-size: {$header_options['background_size']};" : '';
+		
+		$inline_css = $background_colour_css . $background_attachment_css . $background_position_css . $background_size_css;
+		
+		// Generate the span with the inline css options and image url
+		$header_html = '<span class="' . $class . '" style="background-image: url(\'' . $header_options['image_url'] . '\');' . $inline_css . '"></span>';
+		
+		if (!empty(@$template_component_args['include_meta'])) {
+			$header_html .= lai_get_imageObject_schema(get_post_thumbnail_id($current_post));
 		}
 	}
 	
@@ -79,21 +126,20 @@ if (!empty($current_post)) {
 	if ($no_container) {
 		echo $header_html;
 	} else {
-		echo '<div class="header_featured_container">';
+		echo '<div class="' . $container_class . '">';
 			// Display the overlay
-			if (@$header_options['transparent_overlay']) {
+			if ($header_options['transparent_overlay']) {
 				if (!empty($header_options['overlay_opacity'])) {
 					$opacity_style = ' style="background-color: rgba(0,0,0,' . $header_options['overlay_opacity'] . ');"';
 				} else { $opacity_style = ''; }
 				
-				echo '<span class="header-overlay"' . $opacity_style . '></span>';
+				echo '<span class="' . $overlay_class . '"' . $opacity_style . '></span>';
 			}
 			
-			// Display the text
-			$header_content = @$template_component_args['content-override'] ?: @$header_options['header_text'];
-			if (!empty($header_content)) {
+			// Display the header content
+			if (!empty($header_options['header_text'])) {
 				echo '<div class="featured-text">';
-					echo $header_content;
+					echo $header_options['header_text'];
 				echo '</div>';
 			}
 			

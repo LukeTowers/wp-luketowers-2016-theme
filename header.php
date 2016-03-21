@@ -5,6 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
 		<title><?php wp_title(' - ', true, 'right'); bloginfo('name'); ?></title>
+		<?php lai_display_seo_metatags(); ?>
 		
 		<?php wp_head(); ?>
 	</head>
@@ -67,10 +68,11 @@
 				<div class="scroll-to-top"><a href="#" style="display: block;"></a></div>
 				<div class="navigation_position_wrapper">
 					<div class="navigation_container">
+						<?php echo get_template_component('social-links', array('class'=>'mobile')); ?>
 						<?php						
 							$main_menu_args = array(
 								'theme_location'  => 'main-menu',
-								'container'       => 'div',
+								'container'       => 'nav',
 								'container_class' => 'main-navigation',
 								'menu_class'      => 'main-menu',
 								'echo'            => true,
@@ -85,16 +87,7 @@
 					</div>
 					<div class="clearfix"></div>
 				</div>
-				<div class="social_links_container">
-					<span class="social-links">
-						<a href="mailto:<?php echo site_setting('contact_email'); ?>" target="_blank"><span class="fa fa-envelope"></span></a>
-						<a href="https://twitter.com/@<?php echo site_setting('twitter_handle'); ?>" target="_blank"><span class="fa fa-twitter"></span></a>
-						<a href="<?php echo site_setting('instagram_url'); ?>" target="_blank"><span class="fa fa-instagram"></span></a>
-<!-- 						<a href="<?php echo site_setting('google_plus_url'); ?>" target="_blank"><span class="fa fa-google-plus-square"></span></a> -->
-						<a href="<?php echo site_setting('linkedin_url'); ?>" target="_blank"><span class="fa fa-linkedin-square"></span></a>
-						<a href="<?php echo site_setting('youtube_url'); ?>" target="_blank"><span class="fa fa-youtube-play"></span></a>
-					</span>
-				</div>
+				<?php echo get_template_component('social-links', array('class'=>'desktop')); ?>
 				<div class="clearfix"></div>
 			</div>
 			<div class="page_container">
