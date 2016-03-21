@@ -37,6 +37,25 @@
 							jQuery('.navigation_container').slideToggle('fast');
 							jQuery('.navigation_container').toggleClass('open');
 						});
+											
+						var btnScrollToTop = jQuery('.scroll-to-top');
+						didScroll = false;
+						
+						jQuery(window).scroll(function() {
+							didScroll = true;
+						});
+						
+						setInterval(function() {
+							if (didScroll) {
+								didScroll = false;
+								
+								if (jQuery(window).scrollTop() > 75) {
+									jQuery('body').addClass('pin-nav-to-top');
+								} else {
+									jQuery('body').removeClass('pin-nav-to-top');
+								}
+							}
+						}, 250);
 					});
 				</script>
 				<div class="navigation_position_wrapper">
