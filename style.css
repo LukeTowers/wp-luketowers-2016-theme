@@ -244,28 +244,6 @@ blockquote:before {
 }
 
 
-.scroll-to-top {
-	display: none;
-	position: fixed;
-	right: 3%;
-	bottom: 2%;
-	width: 36px;
-	height: 36px;
-	cursor: pointer;
-	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAUNJREFUeNpi/P//P8NAAiaGAQajDhh1wIA7gAGUDZExCfrEgHgPFIuRbR85DgCqEwDic/8RAMQWoIsDgGq4gfjof0wAEuOmqQOA8mxAvOs/brAbiNlp4gCgHDMQr/tPGKwHqaWqA4DijEC86D/xAKSWkZoOmPqfdDCVKg4AirXiseQWFOMCbRQ5AMgvw2P4QyCWh+KHeNSVkeUAIDsDiP/hMPQFEKsjqVWHimEDIDMySHIAkI4G4r84DHwPxIZYglYfKocNgMyKJsoBQOwHxL9xGPQFiK3wZDErqBps4DfUbIIOWIvDgB9A7EJESecCVYsNrCXGAaDSbhWaxj9AHEBCheOPJRRXQ80mKg2ASr35SIkoloxaNgYpEc+HlY6k5AJQ6TcJiLMoqOqzgHgycqmIbh/jaLN81AGjDhh1wEA7ACDAAJLffogJy3/aAAAAAElFTkSuQmCC);
-	background-size: 24px 24px;
-	background-repeat: no-repeat;
-	background-position: center center;
-	background-color: rgba(0,0,0,0.9); /* translucent black */
-	z-index: 9999;
-	border-radius: 3px;
-}
-
-
-
-
-
-
 .header_container,
 .header_container a,
 .site-logo, 

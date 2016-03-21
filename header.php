@@ -32,40 +32,13 @@
 				<!-- menu.jquery.min.js -->
 				<script type="text/javascript">
 					jQuery(document).ready(function() {
-					jQuery('.mobile-menu-btn').click(function(e) {
-						e.preventDefault();
-						jQuery('.navigation_container').slideToggle('fast');
-						jQuery('.navigation_container').toggleClass('open');
+						jQuery('.mobile-menu-btn').click(function(e) {
+							e.preventDefault();
+							jQuery('.navigation_container').slideToggle('fast');
+							jQuery('.navigation_container').toggleClass('open');
+						});
 					});
-										
-					var btnScrollToTop = jQuery('.scroll-to-top');
-					didScroll = false;
-					
-					jQuery(window).scroll(function() {
-						didScroll = true;
-					});
-					
-					setInterval(function() {
-						if (didScroll) {
-							didScroll = false;
-							
-							if (jQuery(window).scrollTop() > 75) {
-								btnScrollToTop.fadeIn();
-								jQuery('body').addClass('pin-nav-to-top');
-							} else {
-								btnScrollToTop.fadeOut();
-								jQuery('body').removeClass('pin-nav-to-top');
-							}
-						}
-					}, 250);
-					
-					jQuery('.scroll-to-top').click(function(e) {
-						e.preventDefault();
-						jQuery('html, body').animate({scrollTop : 0},200);
-					});
-				});
 				</script>
-				<div class="scroll-to-top"><a href="#" style="display: block;"></a></div>
 				<div class="navigation_position_wrapper">
 					<div class="navigation_container">
 						<?php echo get_template_component('social-links', array('class'=>'mobile')); ?>
