@@ -4,6 +4,8 @@
 // Description:		Module that manages the header image component used by this theme
 //************************************************************************************************
 
+// Todo: need to write custom merge function to only overwrite new values if the new ones aren't blank.
+
 // Get the options for this instance of the module
 global $template_component_args;
 /*
@@ -25,6 +27,7 @@ global $template_component_args;
 			- 'overlay_opacity'       (String):   Alpha value for RGBA(0,0,0,x) opacity layer
 			- 'no_image'              (Boolean):  Specify if the featured display element is returned without image data (saves a db call if only background colour is desired)
 			- 'image_url'             (String):   URL to default image to be used if none are found attached to the post
+			- 'relative_height'       (String):   Default Ratio of the height of the sizing image relative to the width. Based on data in lai_image_sizing_data()
 		- 'overrides' (Array):
 			- 'header_text'           (String):   HTML content to be used regardless of anything else
 			- 'background_attachment' (String):  CSS background attachment to be used regardless of anything else
@@ -35,6 +38,7 @@ global $template_component_args;
 			- 'overlay_opacity'       (String):   Alpha value for RGBA(0,0,0,x) opacity layer
 			- 'no_image'              (Boolean):  specify if the featured display element is returned without image data (saves a db call if only background colour is desired)
 			- 'image_url'             (String):   URL to image to be used regardless of anything else
+			- 'relative_height'       (String):   Overriding Ratio of the height of the sizing image relative to the width. Based on data in lai_image_sizing_data()
 */
 
 
@@ -62,6 +66,7 @@ $default_header_options = array_merge(array(
 	'overlay_opacity'        => '',
 	'no_image'               => false,
 	'image_url'              => '',
+	'relative_height'        => '',
 ), (array) @$template_component_args['defaults']);
 
 // Setup the overriding header options
@@ -90,7 +95,8 @@ if (!empty($current_post)) {
 			$post_header_options['image_url'] = $url;
 		}
 	}
-} else { $post_header_options = array(); }
+}
+if (empty($post_header_options)) { $post_header_options = array(); }
 
 
 
@@ -127,6 +133,12 @@ if ($header_options['no_image'] || !empty($header_options['image_url'])) {
 		echo $header_html;
 	} else {
 		echo '<div class="' . $container_class . '">';
+			// Output the relative sizing image
+			if (!empty($header_options['relative_height'])) {
+				echo '<img src="' . lai_image_sizing_data('1', $header_options['relative_height']) . '" class="image-sizer" alt="">';
+			}
+		
+		
 			// Display the overlay
 			if ($header_options['transparent_overlay']) {
 				if (!empty($header_options['overlay_opacity'])) {

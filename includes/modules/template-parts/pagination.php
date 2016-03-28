@@ -39,27 +39,40 @@ if (!function_exists('display_pagination')) {
 			'end_size'        => 1,
 			'mid_size'        => 2,
 			'prev_next'       => true,
-			'prev_text'       => '&larr; Previous',
-			'next_text'       => 'Next &rarr;',
+			'prev_text'       => '<span class="fa fa-arrow-left"></span>&nbsp;Previous',
+			'next_text'       => 'Next&nbsp;<span class="fa fa-arrow-right"></span>',
 			'type'            => 'array',
 		);
 		
 		$paginate_links = paginate_links($pagination_args);
 		
+		$always_display_container = @$template_component_args['always_display_container'];
+		
 		if (!empty($paginate_links)) {
-			echo "<ul class='pagination'>";
-				foreach ($paginate_links as $page_link) {
-					if (!empty(strpos($page_link, 'current'))) { $class = 'active custom_colour'; } else { $class = ""; }
-					echo '<li class="'.@$class.'">' . $page_link . '</li>';
-				}
-			echo "</ul>";
+			echo '<div class="pagination_container contains_pagination">';
+				echo '<ul class="pagination">';
+					foreach ($paginate_links as $page_link) {
+						if (!empty(strpos($page_link, 'current'))) { $class = 'active custom_colour'; } else { $class = ""; }
+						echo '<li class="'.@$class.'">' . $page_link . '</li>';
+					}
+				echo "</ul>";
+			echo '</div>';
+		} elseif ($always_display_container) {
+			echo '<div class="pagination_container"></div>';
 		}
 	}	
 } ?>
 
 <style id="pagination-styles">
 	.pagination_container {
-		margin: 14px 0px 0px;
+		background-color: #041E25;
+		min-height: 10px;
+	}
+	
+	.pagination_container.contains_pagination {
+		padding: 14px 0px 0px 0px;
+		background-color: #FFF;
+		text-align: center;
 	}
 	
 	.pagination {
@@ -68,27 +81,31 @@ if (!function_exists('display_pagination')) {
 	}
 	
 	.pagination li {
-		background-image: none !important;
-		background-color: #EEE;
-		border-radius: 3px;
-	    color: #000;
-	    display: inline-block;
-	    margin: 0px 10px 10px 0px;
+		text-transform: uppercase;
+		text-align: center;
+		display: inline-block;
+		margin: 0px 14px 14px 0px;
 	}
 	
 	.pagination li > * {
-		color: #000;
 		display: block;
-		padding: 8px 15px;
-		border-radius: 3px;
+		padding: 10px 25px;
+		background-color: #1395BA;
+		border-color: #FFF;
+		color: #FFF;
+		box-shadow: 0px 0px 10px -2px #000 inset;
+		font-size: 1.2em !important;
+		letter-spacing: 1px;
+		-webkit-transition: all .4s ease-in-out;
+		-moz-transition: all .4s ease-in-out;
+		-o-transition: all .4s ease-in-out;
+		-ms-transition: all .4s ease-in-out;
+		transition: all .4s ease-in-out;
 	}
 	
-	.pagination a:hover, .pagination .active span {
-		color: #FFF !important;
-		background-color: #4B8C61;
+	.pagination a:hover, .pagination a:focus, .pagination .active span {
+		background-color: #0C647D;
 	}
 </style>
 
-<div class="pagination_container">
-	<?php display_pagination(); ?>
-</div>
+<?php display_pagination(); ?>

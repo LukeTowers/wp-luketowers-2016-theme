@@ -38,7 +38,7 @@
 							<?php get_template_component('header-image', array(
 									'class'       =>  'project-image',
 									'image_only'  =>  true,
-									'size'        =>  'large',
+									'size'        =>  array('580px','405px'),
 								));
 							?>
 							<span class="project-overlay"></span>
@@ -88,7 +88,8 @@
 						<p class="service-description">Have an existing site that you want to edit or add content to? No problem, I can work with any system you have in place!</p>
 					</div>
 				</div>
-			<div class="clearfix"></div>
+				<div class="clearfix"></div>
+			</div>
 		</div>
 		<div class="home-section section-contact">
 			<h2 class="section-title">Contact Me</h2>

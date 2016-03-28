@@ -131,7 +131,7 @@ body select:focus {
     text-align: center;
     background-color: #1395BA;
     color: #FFF;
-    border-color: #FFF;
+    border-color: transparent;
     box-shadow: 0px 0px 10px -2px #000 inset;
     font-size: 1.2em !important;
     letter-spacing: 1px;
@@ -377,7 +377,7 @@ blockquote:before {
 
 .header_featured_container {
     position: relative;
-    height: 400px
+    min-height: 400px
 }
 
 .featured-text {
@@ -422,8 +422,8 @@ blockquote:before {
 // Section: 		Project Styles
 ******************************************************************************************************/
 
-.projects_container {
-	padding: 20px 0px 40px;
+.portfolio_container {
+	background-color: #0C647D;
 }
 
 .project_container {
@@ -803,7 +803,7 @@ blockquote:before {
 
 	
 	.page-header .header_featured_container {
-		height: 500px;
+		min-height: 500px;
 	}
 	
 	.about-picture {
@@ -830,10 +830,10 @@ blockquote:before {
 		transform: translateY(-50%);
 	}
 	
-	.footer_container .footer-logo { left: 3%; }
+	.footer_container .footer-logo { left: 3%; z-index: 1; }
 	.footer_container .footer-logo a { width: 90px; }
 	.footer_container .social_links_container { left: 0; right: 0; }
-	.footer_container .copyright { right: 3%; text-align: right; }
+	.footer_container .copyright { right: 3%; text-align: right; z-index: 1; }
 }
 
 @media screen and (min-width: 1080px) {
