@@ -15,7 +15,7 @@
 				$query_args = array(
 					'post_type'         =>  'project',
 					'post_status'       =>  'publish',
-					'posts_per_page'    =>  12, // Remember to set posts_per_page in admin settings to <= than the lowest value used in all templates
+					'posts_per_page'    =>  -1, // Remember to set posts_per_page in admin settings to <= than the lowest value used in all templates
 					'order'             =>  'DESC', // Temporarily set to oldest first for testing purposes, reset to DESC when done
 					'paged'				=>  $paged,
 				);
@@ -50,10 +50,7 @@
 			<?php endif; ?>
 			<div class="clearfix"></div>
 		</div>
-		<?php
-			get_template_component('pagination', array('max_num_pages' => $project_query->max_num_pages, 'current_page' => $paged, 'always_display_container' => true));		
-			wp_reset_postdata(); 
-		?>
+		<?php wp_reset_postdata(); ?>
 		<div class="clearfix"></div>
 	</div>
 <?php get_footer(); ?>

@@ -77,11 +77,16 @@
 			</div>
 		</div>
 		<style>
+			.home-section .section-about { padding: 0px 5%; }
 			.home-section .about-picture { display: none; }
 			.home-section .about-picture.animating { display: block; }
-			.home-section .about-description { float: none; width: auto; }
+			.home-section .about-description { float: none; width: auto; max-width: 750px; margin: 0 auto; }
+			.about-description .project-info-button:hover {
+				background-color: #1395BA !important;
+				color: #FFF !important;
+			}
 		</style>
-		<div class="home-section" style="background-color: #1395BA; padding: 1%; text-align: center;">
+		<div class="home-section" style="background-color: #1395BA; padding: 2%; text-align: center;">
 			<div class="section-about">
 				<h2 class="section-title" style="color: #FFFFFF; margin: 0px;">About Me</h2>
 				<div class="about-picture">
@@ -98,13 +103,6 @@
 				</div>
 				<div class="clearfix"></div>
 			</div>
-		</div>
-		<div class="home-section section-contact">
-			<h2 class="section-title">Contact Me</h2>
-			<div class="contact-form">
-				<?php echo do_shortcode('[gravityform id="1" title="false" description="false" ajax="true"]'); ?>
-			</div>
-			<div class="clearfix"></div>
 		</div>
 	</div>
 <?php get_footer(); ?>

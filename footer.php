@@ -1,4 +1,11 @@
 			</div> <!-- page_container -->
+			<div class="home-section section-contact">
+				<h2 class="section-title">Contact Me</h2>
+				<div class="contact-form">
+					<?php echo do_shortcode('[gravityform id="1" title="false" description="false" ajax="true"]'); ?>
+				</div>
+				<div class="clearfix"></div>
+			</div>
 			<div class="footer_container">
 				<div class="footer-logo">
 					<a href="<?php echo home_url(); ?>">
