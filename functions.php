@@ -65,3 +65,12 @@ require_once(LUKE_2016_TEMPLATE_PATH . 'includes/modules/resource-loader.php');
 //*************************************************************************************************
 
 require_once(LUKE_2016_TEMPLATE_PATH . 'includes/modules/metaboxes.php');
+
+
+
+///************************************************************************************************
+// Section: 		Widget Areas Module
+// Description:		Module that manages the widget areas for this template
+//*************************************************************************************************
+
+require_once(LUKE_2016_TEMPLATE_PATH . 'includes/modules/widget-areas.php');

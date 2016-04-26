@@ -163,7 +163,11 @@
 					this.play();
 				});
 				// Only display the chaos button when the music has loaded
-				music.addEventListener('canplaythrough', function() {
+				music.addEventListener('canplaythrough', function(e) {
+					// Remove the handler so that this only runs once
+					e.target.removeEventListener(e.type, arguments.callee);
+					
+					// Display the chaos button
 					chaos.css('display', 'block');
 				}, false);
 				
@@ -222,7 +226,8 @@
 					elements.each(function() {
 						current_el = jQuery(this);
 						current_el.css('position', 'fixed');
-						current_el.css('transition', 'all .5s ease');
+						current_el.css('transition', 'all .5s ease-in-out');
+						jQuery(this).addClass('animating');
 					})
 					
 					// BRING FORTH THE CHAOS!!!
@@ -247,13 +252,10 @@
 					elements.each(function() { 
 						jQuery(this).css({
 							position: '',
-							top: '',
-							right: '',
-							bottom: '',
-							left: '',
 							transform: '',
-							zIndex: '',
+							zIndex: ''
 						});
+						jQuery(this).removeClass('animating');
 					}); 
 					// Fade out then pause the music
 					jQuery(music).animate({volume: 0}, 1000, function() {
@@ -264,8 +266,8 @@
 				
 				// Generate the translation to be applied to the selected element based on the window size and element offset. Could be refined greatly.
 				function generate_new_translation(element) {
-					var h = window_height - jQuery(element).offset().top;
-					var w = window_width - jQuery(element).offset().left;
+					var h = window_height - element.offset().top;
+					var w = window_width - element.offset().left;
 					
 					var translate_x = Math.floor(Math.random() * w);
 					var translate_y = Math.floor(Math.random() * h);
@@ -283,7 +285,7 @@
 					elements.each(function() {
 						jQuery(this).css('zIndex', parseInt(Math.random()*100, 10));
 						translate = generate_new_translation(jQuery(this));
-						jQuery(this).css('transform','rotate(' +Math.random()*360 +'deg) ' + 'translate(' + translate[0] + 'px,' + translate[1] + 'px)');
+						jQuery(this).css('transform','rotate(' + Math.random()*360 +'deg) ' + 'translate(' + translate[0] + 'px,' + translate[1] + 'px)');
 					});
 					
 					// Perpetuate the chaos in an orderly fashion

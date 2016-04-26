@@ -3,21 +3,6 @@
 		<?php get_template_component('header-image'); ?>
 	</div>
 	<div class="page-content">
-		<div class="home-section section-about">
-			<h2 class="section-title">About Me</h2>
-			<div class="about-picture">
-				<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQAAAAA3bvkkAAAAAnRSTlMAAQGU/a4AAAAKSURBVHgBY2gAAACCAIFMF9ffAAAAAElFTkSuQmCC" class="image-sizer" alt="">
-				<span class="headshot" style="background-image: url('<?php echo LUKE_2016_TEMPLATE_URL . 'includes/images/headshot.jpg'; ?>');"></span>
-			</div>
-			<div class="about-description">
-				<?php if (have_posts()) : while (have_posts()) : the_post() ?>
-					<?php the_content(); ?>
-					<div class="clearfix"></div>
-				<?php endwhile; else: ?>
-				<?php endif; ?>
-			</div>
-			<div class="clearfix"></div>
-		</div>
 		<div class="home-section section-portfolio">
 			<h2 class="section-title">Past Work</h2>
 			<div class="portfolio_container">
@@ -87,6 +72,29 @@
 						<h3 class="service-title">Content Updates</h3>
 						<p class="service-description">Have an existing site that you want to edit or add content to? No problem, I can work with any system you have in place!</p>
 					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+		<style>
+			.home-section .about-picture { display: none; }
+			.home-section .about-picture.animating { display: block; }
+			.home-section .about-description { float: none; width: auto; }
+		</style>
+		<div class="home-section" style="background-color: #1395BA; padding: 1%; text-align: center;">
+			<div class="section-about">
+				<h2 class="section-title" style="color: #FFFFFF; margin: 0px;">About Me</h2>
+				<div class="about-picture">
+					<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQAAAAA3bvkkAAAAAnRSTlMAAQGU/a4AAAAKSURBVHgBY2gAAACCAIFMF9ffAAAAAElFTkSuQmCC" class="image-sizer" alt="">
+					<span class="headshot" style="background-image: url('<?php echo LUKE_2016_TEMPLATE_URL . 'includes/images/headshot.jpg'; ?>');"></span>
+				</div>
+				<div class="about-description" style="color: #FFFFFF;">
+					<?php if (have_posts()) : while (have_posts()) : the_post() ?>
+						<?php the_content(); ?>
+						<div class="clearfix"></div>
+					<?php endwhile; else: ?>
+					<?php endif; ?>
+					<a class="project-info-button" href="/about/" style="background-color: #FFFFFF; color: #1395BA;">Learn more...</a>
 				</div>
 				<div class="clearfix"></div>
 			</div>
