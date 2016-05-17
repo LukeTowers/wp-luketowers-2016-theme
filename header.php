@@ -57,6 +57,50 @@
 								}
 							}
 						}, 250);
+						
+						
+	
+						// Handle the ID/hash scrolling
+						var busy = false;
+						function navigation_scroll() {
+							if (busy) { return false; }
+							if (location.hash) {
+								var hashName = location.hash.substring(1, location.hash.length);
+								var target = jQuery('[data-scroll-target='+hashName+']:first');
+								if (target.length) {
+									busy = true;
+									var scroll_pos = target.offset().top - 100;
+									if (jQuery('html, body').scrollTop() !== scroll_pos) {
+										jQuery('html, body').animate({ scrollTop: scroll_pos}, 500, function() { busy = false; });
+									}
+								}
+							}
+							return false;
+						}
+						jQuery('.menu-item a[href*="#"]').on('click', function(e) {
+							// Detect if this is the current page and scroll to the element if so. Otherwise, continue on to the proper page
+							// - NOTE: Does not take other potential additions to the href like ? or & into account.								
+							if (jQuery(window).width() <= 820) {
+								jQuery('.navigation_container').slideToggle('fast');
+								jQuery('.navigation_container').toggleClass('open');
+							}
+							var href_pathname = jQuery(this).attr('href').split('#');
+							if (href_pathname[1] === window.location.hash.split('#')[1]) { // Only perform check when the chosen href hash is the same as the current one, otherwise our hashchange event can handle it
+								if (href_pathname[0] === window.location.pathname || href_pathname === '') {
+									e.preventDefault();
+									if (jQuery(window).width() <= 820) {
+										jQuery('.navigation_container').slideToggle('fast');
+										jQuery('.navigation_container').toggleClass('open');
+									}
+									navigation_scroll();
+								}
+							}
+						});
+						jQuery(window).on('hashchange', function(e) {
+							e.preventDefault();
+							navigation_scroll();
+						});
+						jQuery(window).trigger('hashchange');
 					});
 				</script>
 				<div class="navigation_position_wrapper">

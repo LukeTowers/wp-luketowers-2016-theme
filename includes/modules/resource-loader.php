@@ -46,17 +46,6 @@ function initialize_template_admin_styles() {
 add_action('admin_init', 'initialize_template_admin_styles');
 
 
-
-// Inludes the template favicons as specified in includes/icons/icons.html on admin and public pages
-function template_favicon() {
-	include(LUKE_2016_TEMPLATE_PATH . 'includes/icons/icons.html');
-}
-add_action('wp_head', 'template_favicon');
-add_action('admin_head', 'template_favicon');
-add_action('login_enqueue_scripts', 'template_favicon');
-
-
-
 // Add the front-end theme scripts to <head>
 function initialize_template_public_scripts() {
 	wp_enqueue_script('jquery');

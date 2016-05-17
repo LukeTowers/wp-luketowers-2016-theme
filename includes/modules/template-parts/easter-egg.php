@@ -137,7 +137,7 @@
 			'.mobile-menu-button',
 			'.social_links_container',
 			'.social-links a',
-			'.header_featured_container',
+			'.featured-background',
 			'.featured-text > *',
 			'.section-about > *',
 			'.service',
@@ -169,7 +169,7 @@
 			// Toggle the buttons
 			chaos.css('display','none');
 			stop.css('display','block');
-			ga('send', 'event', 'Chaos Controls', 'play', 'Easter Eggs');
+			ga('send', 'event', 'Chaos Controls', 'play ' + jQuery(music).attr('src'), 'Easter Eggs');
 			
 			// Prepare the variables
 			html.css('height', '100%');
@@ -195,7 +195,7 @@
 			// Toggle the buttons
 			chaos.css('display','block');
 			stop.css('display','none');
-			ga('send', 'event', 'Chaos Controls', 'pause', 'Easter Eggs');
+			ga('send', 'event', 'Chaos Controls', 'pause ' + jQuery(music).attr('src'), 'Easter Eggs');
 			
 			// Set the flag to prevent the madness from perpetuating
 			stop_the_madness = true;

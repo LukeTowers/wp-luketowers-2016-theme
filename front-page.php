@@ -54,7 +54,7 @@
 					<div class="centering_container">
 						<div class="service-icon"><span class="fa fa-server"></span></div>
 						<h3 class="service-title">Website Management</h3>
-						<p class="service-description">Web hosting? Domain names? Email? No need to worry about managing those, I’ll do it for you!</p>
+						<p class="service-description">Web hosting? Domain names? Email? No need to worry about managing those, I’ll take care of it for you!</p>
 					</div>
 				</div>
 				<div class="service">
@@ -90,8 +90,7 @@
 			<div class="section-about">
 				<h2 class="section-title" style="color: #FFFFFF; margin: 0px;">About Me</h2>
 				<div class="about-picture">
-					<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQAAAAA3bvkkAAAAAnRSTlMAAQGU/a4AAAAKSURBVHgBY2gAAACCAIFMF9ffAAAAAElFTkSuQmCC" class="image-sizer" alt="">
-					<span class="headshot" style="background-image: url('<?php echo LUKE_2016_TEMPLATE_URL . 'includes/images/headshot.jpg'; ?>');"></span>
+					<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQAAAAA3bvkkAAAAAnRSTlMAAQGU/a4AAAAKSURBVHgBY2gAAACCAIFMF9ffAAAAAElFTkSuQmCC" class="image-sizer headshot" alt="" style="background-image: url('<?php echo LUKE_2016_TEMPLATE_URL . 'includes/images/headshot.jpg'; ?>');">
 				</div>
 				<div class="about-description" style="color: #FFFFFF;">
 					<?php if (have_posts()) : while (have_posts()) : the_post() ?>
