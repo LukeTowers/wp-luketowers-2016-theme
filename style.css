@@ -193,6 +193,7 @@ body {
 a {
 	text-decoration: none;
 	color: #0C647D;
+	word-wrap: break-word;
 }
 a:hover {
 	text-decoration: underline;
@@ -443,6 +444,7 @@ blockquote:before {
 .project_container {
 	position: relative;
 	background-color: #1395BA;
+	width: 100%;
 }
 
 .project_container * {

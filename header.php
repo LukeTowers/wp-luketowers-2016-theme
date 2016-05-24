@@ -5,7 +5,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
 		<title><?php wp_title(' - ', true, 'right'); bloginfo('name'); ?></title>
-		<?php lai_display_seo_metatags(); ?>
 		
 		<?php wp_head(); ?>
 	</head>

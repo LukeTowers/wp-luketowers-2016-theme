@@ -6,13 +6,21 @@
 		<div class="home-section section-portfolio">
 			<h2 class="section-title">Past Work</h2>
 			<div class="portfolio_container">
-				<?php		
+				<?php
 					$query_args = array(
 						'post_type'         =>  'project',
 						'post_status'       =>  'publish',
 						'posts_per_page'    =>  6,
 						'order'             =>  'DESC',
 					);
+					
+					// Filter out protected posts
+					add_action('pre_get_posts', function() {
+						add_filter('posts_where', function($where) {
+							global $wpdb;
+							return $where .= "AND {$wpdb->posts}.post_password = ''";
+						});
+					});
 					
 					$project_query = new WP_Query($query_args);
 				?>
