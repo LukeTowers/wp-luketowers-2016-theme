@@ -7,7 +7,7 @@
 		display: block;
 		text-transform: uppercase;
 	}
-	
+
 	#chaos {
 		display: none;
 		background-color: rgba(255,255,255,0.4);
@@ -15,7 +15,7 @@
 		bottom: 15px;
 		left: 15px;
 	}
-	
+
 	#stop {
 		background-color: rgba(0,0,0,0.4);
 		color: #FFF;
@@ -26,7 +26,7 @@
 </style>
 <a href="#" id="chaos" class="madness-button">Chaos</a>
 <a href="#" id="stop" class="madness-button">Stop the madness!</a>
-<?php 
+<?php
 	// TODO: keyboard cat,
 	// numa numa, badgers, with a spirit (maybe),axel f crazy frog
 	// what is love, witch doctor, scat man?, leek song
@@ -36,11 +36,11 @@
 		'posts_per_page'    =>  -1,
 		'order'             =>  'DESC',
 	);
-	
+
 	$project_query = new WP_Query($query_args);
-	
+
 	$audio_tracks = array();
-	
+
 	if ($project_query->have_posts()) : while ($project_query->have_posts()) : $project_query->the_post();
 		$easter_egg_info = get_post_meta(get_the_ID(), 'easter_egg_info', true);
 		if (!empty($easter_egg_info)) {
@@ -53,7 +53,7 @@
 		}
 	endwhile; endif;
 	wp_reset_postdata();
-	
+
 	// Total the weights
 	$total_weight = 0;
 	foreach ($audio_tracks as $counting_track) {
@@ -61,7 +61,7 @@
 			$total_weight += $counting_track['weight'];
 		}
 	}
-	
+
 	// Select a random track to use
 	$random = rand(1, $total_weight);
 	$chosen_track;
@@ -72,7 +72,7 @@
 		// the larger the current weight, the more likely the random number will trigger acceptance (below 0)
 		// keep in mind that later elements in the stack have a higher chance of being selected this way
 		$random -= $track['weight'];
-		
+
 		if ($random <= 0) {
 			$chosen_track = $track;
 			$chosen_track['number'] = $i;
@@ -86,13 +86,13 @@
 		// Cache window size
 		window_height = jQuery(window).height();
 		window_width = jQuery(window).width();
-		
+
 		// Initialize counter
 		insanity_meter = 0;
-		
+
 		// Animation status variables
 		stop_the_madness = false;
-		
+
 		// Music initilization
 		music = new Audio('<?php echo $chosen_track['url']; ?>');
 		<?php if (!empty($chosen_track['credits'])) { ?>
@@ -120,12 +120,12 @@
 		music.addEventListener('canplaythrough', function(e) {
 			// Remove the handler so that this only runs once
 			e.target.removeEventListener(e.type, arguments.callee);
-			
+
 			// Display the chaos button
 			chaos.css('display', 'block');
 		}, false);
-		
-		
+
+
 		// Selectors
 		chaos = jQuery('#chaos');
 		stop = jQuery('#stop');
@@ -153,95 +153,97 @@
 		];
 		selector = selectors.join(', ');
 		elements = jQuery(selector);
-		
-		// The function of these functions is to be functionally funny, not dysfunctionally practical			
+
+		// The function of these functions is to be functionally funny, not dysfunctionally practical
 		chaos.on('click', function(e) {
 			e.preventDefault();
 			the_law_of_nature();
 		});
-		
+
 		stop.on('click', function(e) {
 			e.preventDefault();
 			the_dream_of_man();
 		});
-		
+
 		function the_law_of_nature() {
 			// Toggle the buttons
 			chaos.css('display','none');
 			stop.css('display','block');
 			ga('send', 'event', 'Chaos Controls', 'play ' + jQuery(music).attr('src'), 'Easter Eggs');
-			
+
 			// Prepare the variables
 			html.css('height', '100%');
 			body.css('height', '100%');
 			stop_the_madness = false;
-			
+
 			// Prepare the elements for the animation
 			elements.each(function() {
-				current_el = jQuery(this);
-				current_el.css('position', 'fixed');
-				current_el.css('transition', 'all .5s ease-in-out');
-				jQuery(this).addClass('animating');
-			})
-			
+    			var $this = jQuery(this);
+				$this.css('position', 'fixed');
+				$this.css('transition', 'all .5s ease-in-out');
+				$this.addClass('animating');
+			});
+
 			// BRING FORTH THE CHAOS!!!
 			music.volume = 0;
 			music.play();
 			jQuery(music).animate({volume: 1.0},1000);
 			bring_forth_chaos();
 		}
-		
+
 		function the_dream_of_man() {
 			// Toggle the buttons
 			chaos.css('display','block');
 			stop.css('display','none');
 			ga('send', 'event', 'Chaos Controls', 'pause ' + jQuery(music).attr('src'), 'Easter Eggs');
-			
+
 			// Set the flag to prevent the madness from perpetuating
 			stop_the_madness = true;
-			
+
 			// Reset the css (currently leaving transition properties applied)
 			html.css('height', '');
 			body.css('height', '');
-			elements.each(function() { 
-				jQuery(this).css({
+			elements.each(function() {
+    			var $this = jQuery(this);
+    			$this.css({
 					position: '',
 					transform: '',
 					zIndex: ''
 				});
-				jQuery(this).removeClass('animating');
-			}); 
+				$this.removeClass('animating');
+			});
 			// Fade out then pause the music
 			jQuery(music).animate({volume: 0}, 1000, function() {
 				music.pause();
 			});
 		}
-		
-		
+
+
 		// Generate the translation to be applied to the selected element based on the window size and element offset. Could be refined greatly.
 		function generate_new_translation(element) {
 			var h = window_height - element.offset().top;
 			var w = window_width - element.offset().left;
-			
+
 			var translate_x = Math.floor(Math.random() * w);
 			var translate_y = Math.floor(Math.random() * h);
-			
+
 			return [translate_x, translate_y];
 		}
-		
+
 		function bring_forth_chaos() {
 			animated_elements = 0;
-			if (stop_the_madness) { 
+			if (stop_the_madness) {
 				return;
 			}
-			
+
 			// Randomize elements z-index, rotation, and translation
 			elements.each(function() {
-				jQuery(this).css('zIndex', parseInt(Math.random()*100, 10));
-				translate = generate_new_translation(jQuery(this));
-				jQuery(this).css('transform','rotate(' + Math.random()*360 +'deg) ' + 'translate(' + translate[0] + 'px,' + translate[1] + 'px)');
+    			var $this = jQuery(this);
+				$this.css('zIndex', parseInt(Math.random()*100, 10));
+				translate = generate_new_translation($this);
+				$this.css('transform','rotate(' + Math.random()*360 +'deg) ' + 'translate(' + translate[0] + 'px,' + translate[1] + 'px)');
 			});
-			
+
 			// Perpetuate the chaos in an orderly fashion
 			elements.last().one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function() {
 				bring_forth_chaos();
