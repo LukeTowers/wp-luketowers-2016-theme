@@ -83,6 +83,9 @@
 
 <script type="text/javascript">
 	jQuery(document).ready(function() {
+    	// Shot in the dark
+    	console.log('Work for Automattic? Perhaps you could put in a good word for me, eh? :)');
+
 		// Cache window size
 		window_height = jQuery(window).height();
 		window_width = jQuery(window).width();
@@ -110,10 +113,13 @@
 		music.addEventListener('ended', function() {
 			this.currentTime = 0;
 			insanity_meter++;
-			if (this.playbackRate < 4) {
+			if (this.playbackRate < 3.9) {
 				this.playbackRate = this.playbackRate + 0.1;
+				console.log('You have survived listening to this track ' + insanity_meter + ' time(s). Keep it up! - Current playback rate: ' + this.playbackRate.toFixed(1));
+			} else {
+    			console.log("Surely you must be insane by now? The music can't be played any faster than it's going now! Total plays: " + insanity_meter);
 			}
-			console.log('You have survived listening to this track ' + insanity_meter + ' time(s). Keep it up! - Current playback rate: ' + this.playbackRate.toFixed(1));
+
 			this.play();
 		});
 		// Only display the chaos button when the music has loaded
